@@ -10,3 +10,7 @@ edition = "2018"
 clap = "2.33.3"
 dotenv = "0.15.0"
 paranagram = { git = "https://github.com/tatounee/Paranagram.git"}
+
+[profile.release]
+opt-level = 3
+lto = true
