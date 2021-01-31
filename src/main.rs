@@ -45,3 +45,79 @@ fn main() {
             .long("debug")
             .possible_values(&["true", "false"]))
         .get_matches();
+
+    let output = match matches.value_of("OUTPUT") {
+        Some(o) => o.to_owned(),
+        None => matches.value_of("SENTENCE").unwrap().to_owned() + ".txt",
+    };
+
+    let output_path: &Path = Path::new(output.as_str());
+
+    let debug = matches.is_present("DEBUG");
+    let just_words = matches.is_present("JUSTWORDS");
+
+    let goal = if just_words { 2 } else { 4 };
+
+    let paranagram = {
+        let path = Path::new(matches.value_of("INPUT").unwrap());
+        if !path.exists() {
+            println!("Error: The file {} doesn't existe", path.display());
+            exit(0)
+        } else if path.extension().unwrap_or_default() != "txt" {
+            println!("Error : The file {} must be a .txt file", path.display());
+            exit(0)
+        }
+        if debug {
+            println!("Loading {} ...", path.display())
+        }
+        match Paranagram::new(path) {
+            Ok(p) => {
+                if debug {
+                    println!("[1/{}] File {} succefully loaded", goal, path.display())
+                }
+                p
+            },
+            Err(e) => {
+                println!("Error : {}", e);
+                exit(0);
+            }
+        }
+    };
+
+    let buffer: String;
+    let sentence = matches.value_of("SENTENCE").unwrap();
+    let word = Word::new(sentence);
+    if just_words {
+        let words = paranagram.existing_anagrams(&word);
+        buffer = words.into_iter().map(|w| {
+            let mut line = format!("{} ", w);
+            line.push('\n');
+            line
+        }).collect::<String>();
+        if debug {
+            println!("[2/{}] Possible anagrams found", goal);
+        }
+    } else {
+        let anagrams = if debug {
+            paranagram.generate_anagrams_debug(sentence, 1, goal)
+        } else {
+            paranagram.generate_anagrams(sentence)
+        };
+        buffer = anagrams.into_iter().map(|v| {
+            let mut line = v.into_iter().map(|w| format!("{} ", w)).collect::<String>();
+            line.push('\n');
+            line
+        }).collect::<String>();
+    }
+    let mut file = match File::create(output_path) {
+        Ok(f) => f,
+        Err(e) => {
+            println!("Error : {}", e);
+            exit(0);
+        }
+    };
+    match file.write_all(&buffer.as_bytes()) {
+        Err(e) => println!("Error : {}", e),
+        Ok(_) => println!("Anagrams found ! Look at {}", output_path.display())
+    }
+}
