@@ -18,6 +18,7 @@ fn main() {
         .author(crate_authors!())
         .version(crate_version!())
         .about(crate_description!())
+        .after_help("If you haven't already done yet, set the path of input and output file in the .env file.\nExemple of use: \n\t$ paranagram -d -j --output=\"myoutputfile.txt\" \"Rust for ever\"\nIt will generate all words (-j) which can be created from \"Rust for ever\" and output that in the file \"myoutputfile.txt\" (--output). You will see the steps of the creation of anagrams (-d) and it's based from the input file set in the \".env\" file.")
         .bin_name("paranagram")
         .arg(Arg::with_name("SENTENCE")
             .help("The sentence from where you want to find anagrams")
