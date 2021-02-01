@@ -33,6 +33,7 @@ OUTPUT_PATH = C:/dir1/output.txt
 ## Usage
 
 Simply open a terminal in the same directory of your application and run `$ para <some_sentence>`
+On Linux, you may have to run the application in the parent directory. Ex: `$ dir/linux_para <some_sentence>`
 
 ### Flag and Option
 
