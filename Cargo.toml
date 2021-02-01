@@ -3,7 +3,8 @@ name = "paranagram_clap"
 version = "0.1.0"
 authors = ["Tatoune <oettam32@gmail.com>"]
 edition = "2018"
-
+description = "A CLI to find anagrams from a sentence"
+repository = "https://github.com/Tatounee/Paranagram_Clap"
 readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
