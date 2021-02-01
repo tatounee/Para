@@ -1,4 +1,3 @@
-
 #[macro_use]
 extern crate clap;
 
@@ -6,11 +5,12 @@ use clap::{App, Arg};
 use dotenv::dotenv;
 use paranagram::{Paranagram, Word};
 
-use std::path::Path;
-use std::io::Write;
-use std::fs::File;
-use std::process::exit;
 use std::env;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
+use std::process::exit;
+
 fn main() {
     dotenv().ok();
 
@@ -74,10 +74,14 @@ fn main() {
         match Paranagram::new(path) {
             Ok(p) => {
                 if debug {
-                    println!("[1/{}] The file {} has been successfully loaded", goal, path.display())
+                    println!(
+                        "[1/{}] The file {} has been successfully loaded",
+                        goal,
+                        path.display()
+                    )
                 }
                 p
-            },
+            }
             Err(e) => {
                 println!("Error : {}", e);
                 exit(0);
@@ -90,11 +94,14 @@ fn main() {
     let word = Word::new(sentence);
     if just_words {
         let words = paranagram.existing_anagrams(&word);
-        buffer = words.into_iter().map(|w| {
-            let mut line = format!("{} ", w);
-            line.push('\n');
-            line
-        }).collect::<String>();
+        buffer = words
+            .into_iter()
+            .map(|w| {
+                let mut line = format!("{} ", w);
+                line.push('\n');
+                line
+            })
+            .collect::<String>();
         if debug {
             println!("[2/{}] Possible anagrams found", goal);
         }
@@ -104,11 +111,14 @@ fn main() {
         } else {
             paranagram.generate_anagrams(sentence)
         };
-        buffer = anagrams.into_iter().map(|v| {
-            let mut line = v.into_iter().map(|w| format!("{} ", w)).collect::<String>();
-            line.push('\n');
-            line
-        }).collect::<String>();
+        buffer = anagrams
+            .into_iter()
+            .map(|v| {
+                let mut line = v.into_iter().map(|w| format!("{} ", w)).collect::<String>();
+                line.push('\n');
+                line
+            })
+            .collect::<String>();
     }
     let mut file = match File::create(output_path) {
         Ok(f) => f,
@@ -119,6 +129,6 @@ fn main() {
     };
     match file.write_all(&buffer.as_bytes()) {
         Err(e) => println!("Error : {}", e),
-        Ok(_) => println!("Anagrams found ! Look at {}", output_path.display())
+        Ok(_) => println!("Anagrams found ! Look at {}", output_path.display()),
     }
 }
