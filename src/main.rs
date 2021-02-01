@@ -37,11 +37,11 @@ fn main() {
             .env("OUTPUT_PATH")
             .takes_value(true))
         .arg(Arg::with_name("JUSTWORDS")
-            .help("Use if you only want the word witch can be create from your sentence")
+            .help("Use if you only want the words which can be created from your sentence")
             .short("j")
             .long("justwords"))
         .arg(Arg::with_name("DEBUG")
-            .help("Prints advencement of anagrams's generation")
+            .help("Prints advancement of the generation of anagrams")
             .short("d")
             .long("debug")
             .possible_values(&["true", "false"]))
@@ -74,7 +74,7 @@ fn main() {
         match Paranagram::new(path) {
             Ok(p) => {
                 if debug {
-                    println!("[1/{}] File {} succefully loaded", goal, path.display())
+                    println!("[1/{}] The file {} has been successfully loaded", goal, path.display())
                 }
                 p
             },
