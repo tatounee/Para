@@ -7,4 +7,4 @@
 **/*.rs.bk
 
 /test/
-.env
+/**.env
