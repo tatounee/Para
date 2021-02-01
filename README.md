@@ -43,4 +43,4 @@ Simply open a terminal in the same directory of your application and run `$ para
 
 # :warning: Little PC
 
-If you try to generate full sentences of anagrams, you will need a lot of RAM. In my PC with 16 Go I can't search for sentence more than 13 characters.
+If you try to generate full sentences of anagrams (i.e. no --justword), you will need a lot of RAM. In my PC with 16 Go I can't search for sentence more than 13 characters.
