@@ -1,11 +1,11 @@
-# Paranagram Clap
+# Para
 A command-line application to find anagrams.
 
 ## Get it
 
 If you want to compile it, you can just clone this repo and so compile it.
 
-If you want to use Paranagram Clap, you can search in the [release](https://github.com/Tatounee/Paranagram_Clap/tree/main/release) directory for your platform.
+If you want to use Para, you can search in the [release](https://github.com/Tatounee/Paranagram_Clap/tree/main/release) directory for your platform.
 
 You will need a dictionary file as a base to generate anagrams, you can find one in the [release](https://github.com/Tatounee/Paranagram_Clap/tree/main/release) directory.
 
@@ -19,7 +19,7 @@ Setup your `.env` file to set the default paths for input and output file. It re
 ```
 ── C:
    ├── dir1
-   │   ├── paranagram_clap.exe
+   │   ├── para.exe
    │   ├── input.txt
    │   └── input.out
    └── .env
@@ -32,7 +32,7 @@ OUTPUT_PATH = C:/dir1/output.txt
 
 ## Usage
 
-Simply open a terminal in the same directory of your application and run `$ paranagram_clap <some_sentence>`
+Simply open a terminal in the same directory of your application and run `$ para <some_sentence>`
 
 ### Flag and Option
 
