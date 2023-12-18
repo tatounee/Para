@@ -10,8 +10,35 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 use std::process::exit;
+use std::time::Instant;
 
 fn main() {
+    dbg_main()
+}
+
+fn dbg_main() {
+    let start = Instant::now();
+
+    let paranagram = Paranagram::new(Path::new("./release/fr_words.txt")).unwrap();
+    let anagrams = paranagram.generate_anagrams("pomme paris");
+    let anagrams = anagrams
+        .into_iter()
+        .map(|v| {
+            let mut line = v
+                .into_iter()
+                .fold(String::new(), |acc, w| format!("{acc} {w}"));
+            line.push('\n');
+            line
+        })
+        .collect::<String>();
+
+    let mut file = File::create("outana").unwrap();
+    file.write_all(format!("\n{:?}\n", Instant::now() - start).as_bytes())
+        .unwrap();
+    file.write_all(anagrams.as_bytes()).unwrap();
+}
+
+fn _main() {
     dotenv().ok();
 
     let matches =  App::new("Para")
@@ -114,7 +141,10 @@ fn main() {
         buffer = anagrams
             .into_iter()
             .map(|v| {
-                let mut line = v.into_iter().map(|w| format!("{} ", w)).collect::<String>();
+                let mut line = v
+                    .into_iter()
+                    .fold(String::new(), |acc, w| format!("{acc} {w}"));
+
                 line.push('\n');
                 line
             })
@@ -127,7 +157,7 @@ fn main() {
             exit(0);
         }
     };
-    match file.write_all(&buffer.as_bytes()) {
+    match file.write_all(buffer.as_bytes()) {
         Err(e) => println!("Error : {}", e),
         Ok(_) => println!("Anagrams found ! Look at {}", output_path.display()),
     }
